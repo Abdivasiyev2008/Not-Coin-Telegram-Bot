@@ -21,8 +21,8 @@ import aiohttp
 logging.basicConfig(format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-CHANNEL_ID = '@YourChannel'  # O'z kanal nomingizni kiriting
-BOT_TOKEN = '#YourTelegramBotID'  # Bot tokeningiz
+CHANNEL_ID = '@testchannelbots2dw'  # O'z kanal nomingizni kiriting
+BOT_TOKEN = '7384714328:AAHvieSEyVWe_JwUsg8wvXxwWQSiZBzHBkY'  # Bot tokeningiz
 
 async def add_user(telegram_id, coins, limit=1000, energy=1000, tap=1):
     loop = asyncio.get_event_loop()
@@ -70,7 +70,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         return
 
     # If subscribed, proceed with the regular bot functionality
-    referral_link = f"https://t.me/YOYRBOTUSERNAME?start=r_{user_id}"
+    referral_link = f"https://t.me/RPGCOINBOT?start=r_{user_id}"
     welcome_message = """
 Hey! Welcome to R-P-G Bot!
 Tap on the coin and see your balance rise.
@@ -108,7 +108,7 @@ A huge reward awaits you at the end of the project for inviting your friends. It
         reply_markup=ReplyKeyboardMarkup(
             keyboard=[
                 [KeyboardButton(text="PLAY!",
-                                web_app=WebAppInfo(url=f"#YourWebSiteURL/{user_id}/"))],
+                                web_app=WebAppInfo(url=f"https://0174-84-54-70-31.ngrok-free.app/{user_id}/"))],
             ] if is_subscribed else [],  # PLAY tugmasi faqat obuna bo'lgan foydalanuvchilarga ko'rsatiladi
             resize_keyboard=True
         ),

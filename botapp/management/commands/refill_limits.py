@@ -17,3 +17,4 @@ class Command(BaseCommand):
                 user.save()
 
         self.stdout.write(self.style.SUCCESS('Successfully refilled limits'))
+

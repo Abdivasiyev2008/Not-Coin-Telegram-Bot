@@ -74,7 +74,7 @@
                 <img src="{% static 'assets/images/thunder.png' %}" width="40px">
 
                 <div class="power-count">
-                    <span id="power" class="select-none">{{ limit }}</span>
+                    <span id="power" class="select-none">{{ user.limit }}</span>
                     <span class="gray select-none" id="total">/{{ user.energy }}</span>
                 </div>
             </div>
@@ -138,12 +138,8 @@
                     },
                     success: function(response) {
                         const currentReward = $('#reward').text();
-                        if (response.coins > 0 && response.coins < 1000) {
-                            $('#reward').text(response.coins);
-                            showCoinAnimation(x, y);
-                        } else {
-                            $('#reward').text(currentReward);
-                        }
+                        $('#reward').text(response.coins);
+                        showCoinAnimation(x, y);
                         $('#power').text(response.limit);
                     },
                     error: function(xhr, status, error) {
@@ -152,29 +148,11 @@
                 });
             });
 
-            function refillLimitAutomatically() {
-                $.ajax({
-                    url: refillEndpoint,
-                    method: 'GET',
-                    success: function(response) {
-                        $('#power').text(response.limit);
-                        $('#reward').text(response.coins);
-                        if (response.limit > 0) {
-                            $('#coin').prop('disabled', false);
-                        } else {
-                            $('#coin').prop('disabled', true);
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(error);
-                    }
-                });
-            }
+            setInterval(refillLimitAutomatically, 3000);
 
-            setInterval(refillLimitAutomatically, 5000);
+            // Page load: Refill limit
+            refillLimitAutomatically();
         });
-
-
     </script>
 
 </body>

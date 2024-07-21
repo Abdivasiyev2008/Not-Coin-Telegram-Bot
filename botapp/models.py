@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 
+
 class User(models.Model):
     telegram_id = models.CharField(max_length=255, unique=True)
     coins = models.IntegerField(default=0)
@@ -18,7 +19,6 @@ class User(models.Model):
 
             self.last_interaction = now
             self.save()
-
 
     def __str__(self):
         return self.telegram_id

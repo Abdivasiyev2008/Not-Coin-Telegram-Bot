@@ -153,11 +153,12 @@ def friends(request, telegram_id):
                 # Unless find `User` in database, continue
                 continue
 
+        copy = telegram_id
         telegram_id = encoder(telegram_id)
-
         context = {
             'telegram_id': telegram_id,
             'user_refs': user_refs,
+            'copy': copy
         }
 
         return render(request, 'coin/friends.html', context)

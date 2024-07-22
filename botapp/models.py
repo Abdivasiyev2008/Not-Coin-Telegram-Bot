@@ -22,3 +22,11 @@ class User(models.Model):
 
     def __str__(self):
         return self.telegram_id
+
+
+class RefFriendModel(models.Model):
+    telegram_id = models.CharField(max_length=255)
+    ref_friend = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.telegram_id

@@ -15,7 +15,7 @@
 <body class="frens">
 
     <div class="haeder">
-        <a href="#">
+        <a href="/{{ telegram_id }}/">
             <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M22 11.9299H2" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M8.00009 19L2.84009 14C2.5677 13.7429 2.35071 13.433 2.20239 13.0891C2.05407 12.7452 1.97754 12.3745 1.97754 12C1.97754 11.6255 2.05407 11.2548 2.20239 10.9109C2.35071 10.567 2.5677 10.2571 2.84009 10L8.00009 5" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -26,7 +26,7 @@
     <div class="frens-main">
 
         <div class="frens-count">
-            <span>11 Frens</span>
+            <span>{{ user.count }} Frens</span>
         </div>
 
         <div class="frens-total-earn">
@@ -63,18 +63,17 @@
                     <h5>Invite fren</h5>
                     <div>
                         <img src="{% static 'assets/images/coin.png' %}" width="15px">
-                        <span>2,500</span>
+                        <span>1k</span>
                         <span>for you and fren</span>
                     </div>
                 </div>
             </div>
 
             <div class="frens-open-detail">
-                <a href="#">Open details</a>
+                <a href="#" onclick="copyToClipboard('https://t.me/RPGCOINBOT?start=r_{{ telegram_id }}')">Copy</a>
             </div>
         </div>
     </div>
-
 
     <div class="frens-list">
         <div class="frens-list-title">
@@ -82,44 +81,57 @@
         </div>
 
         <!-- Friends List -->
-        <div class="frens-list-box">
-            <div class="frens-data">
-                <div class="frens-profile">
-                    <div class="frens-profile-photo">
-                        <img src="" alt="">
-                    </div>
-                    <div class="frens-profile-data">
-                        <h4>User</h4>
-                        <div>
-                            <img src="{% static 'assets/images/3d-trophy.png' %}" width="15px">
-                            <span>Gold</span>
-                            <span>•</span>
-                            <img src="{% static 'assets/images/coin.png' %}" width="15px">
-                            <span>1,165,402</span>
+        {% for user in user_refs %}
+            <div class="frens-list-box">
+                <div class="frens-data">
+                    <div class="frens-profile">
+                            <img style="width: 80px; height: 50px; border-radius: 50%; padding-right: 3px"
+                                    src="https://static.vecteezy.com/system/resources/previews/019/879/186/original/user-icon-on-transparent-background-free-png.png" alt="">
+                        <div class="frens-profile-data">
+                            <h4>{{ user.ref_friend }}</h4>
+                            <div>
+                                <img src="{% static 'assets/images/3d-trophy.png' %}" width="15px">
+                                <span>Gold</span>
+                                <span>•</span>
+                                <img src="{% static 'assets/images/coin.png' %}" width="15px">
+                                <span>{{ user.coins }}</span>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="frens-data-count">
-                    <span>+63k</span>
-                    <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M9 5L14.15 10C14.4237 10.2563 14.6419 10.5659 14.791 10.9099C14.9402 11.2539 15.0171 11.625 15.0171 12C15.0171 12.375 14.9402 12.7458 14.791 13.0898C14.6419 13.4339 14.4237 13.7437 14.15 14L9 19" stroke="#ffffff" opacity="0.4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
+                    <div class="frens-data-count">
+                        <span>+1k</span>
+                        <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 5L14.15 10C14.4237 10.2563 14.6419 10.5659 14.791 10.9099C14.9402 11.2539 15.0171 11.625 15.0171 12C15.0171 12.375 14.9402 12.7458 14.791 13.0898C14.6419 13.4339 14.4237 13.7437 14.15 14L9 19" stroke="#ffffff" opacity="0.4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
                 </div>
             </div>
-
-            
+        <br>
+        {% endfor %}
         <!-- End Friends List -->
-        </div>
     </div>
 
     <div class="frens-invite">
         <div class="frens-invite-button">
-            <span>Invite a fren</span>
+            <a style="color: #ffffff" href="#" onclick="copyToClipboard('https://t.me/RPGCOINBOT?start=r_{{ telegram_id }}')">Invite a fren</a>
         </div>
     </div>
 
     <script src="./assets/js/charge.js"></script>
+
+
+    <script>
+        function copyToClipboard(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            alert('Referal Link copied to clipboard');
+        }
+    </script>
 
 </body>
 </html>

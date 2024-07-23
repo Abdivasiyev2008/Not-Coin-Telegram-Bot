@@ -67,33 +67,30 @@
     {# End Click Coin #}
 
     {# Footer #}
-
-        <div class="menu-container">
-
-            <div class="power">
-                <img src="{% static 'assets/images/thunder.png' %}" width="40px">
-
-                <div class="power-count">
-                    <span id="power" class="select-none">{{ user.limit }}</span>
-                    <span class="gray select-none" id="total">/{{ user.energy }}</span>
-                </div>
-            </div>
-
-            <div class="menu-bottuns">
-                <a href="/{{ telegram_id }}/friends/" class="button b-r">
-                    <img src="{% static 'assets/images/teddy-bear.png' %}" alt="" width="28px">
-                    <span class="select-none">Frens</span>
-                </a>
-                <a href="/{{ telegram_id }}/guid/" class="button b-r">
-                    <img src="{% static 'images/user.webp' %}" alt="" width="30px">
-                    <span class="select-none">Users</span>
-                </a>
-                <a href="/{{ telegram_id }}/boost/" class="button">
-                    <img src="{% static 'assets/images/coin.png' %}" alt="" width="28px">
-                    <span class="select-none">Boost</span>
-                </a>
+    <div class="menu-container">
+        <div class="power">
+            <img src="{% static 'assets/images/thunder.png' %}" width="40px">
+            <div class="power-count">
+                <span id="power" class="select-none">{{ user.limit }}</span>
+                <span class="gray select-none" id="total">/{{ user.energy }}</span>
             </div>
         </div>
+
+        <div class="menu-bottuns">
+            <a href="/{{ telegram_id }}/friends/" class="button b-r">
+                <img src="{% static 'assets/images/teddy-bear.png' %}" alt="" width="28px">
+                <span class="select-none">Frens</span>
+            </a>
+            <a href="/{{ telegram_id }}/guid/" class="button b-r">
+                <img src="{% static 'images/user.webp' %}" alt="" width="30px">
+                <span class="select-none">Users</span>
+            </a>
+            <a href="/{{ telegram_id }}/boost/" class="button">
+                <img src="{% static 'assets/images/coin.png' %}" alt="" width="28px">
+                <span class="select-none">Boost</span>
+            </a>
+        </div>
+    </div>
     {# End Footer #}
 
     {# Percentage Line of Coin #}
@@ -108,7 +105,7 @@
         $(document).ready(function(){
             const user_id = "{{ user.telegram_id }}";
             const coinEndpoint = `/${user_id}/update_coins/`;
-            const refillEndpoint = `/${user_id}/`;
+            const refillEndpoint = `/${user_id}/refill_limit/`;
 
             function showCoinAnimation(x, y) {
                 const animation = $('<div class="coin-animation">+ {{ user.tap }}</div>');
@@ -148,9 +145,23 @@
                 });
             });
 
-            setInterval(refillLimitAutomatically, 3000);
+            function refillLimitAutomatically() {
+                $.ajax({
+                    url: refillEndpoint,
+                    method: 'POST',
+                    data: {
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    success: function(response) {
+                        $('#power').text(response.limit);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            }
 
-            // Page load: Refill limit
+            setInterval(refillLimitAutomatically, 3000);
             refillLimitAutomatically();
         });
     </script>

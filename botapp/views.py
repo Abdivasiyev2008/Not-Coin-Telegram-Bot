@@ -1,8 +1,19 @@
 from django.shortcuts import render, redirect
-from django.http import JsonResponse, HttpResponseBadRequest
 from .models import User, RefFriendModel
 from encoder import encoder, decoder
 from django_user_agents.utils import get_user_agent
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+from django.views import View
+
+@method_decorator(csrf_exempt, name='dispatch')
+class RefillLimitView(View):
+    def post(self, request, telegram_id):
+        user = User.objects.get(telegram_id=telegram_id)
+        user.refill_limit()
+        return JsonResponse({'limit': user.limit})
+
 
 def number_to_word(balance):
     if 1000 <= balance < 1000000:
@@ -21,7 +32,7 @@ def index(request, telegram_id):
     # Get user from DataBase with user's telegram id
     user_agent = get_user_agent(request)
 
-    if user_agent.is_mobile or user_agent.is_bot or user_agent.is_touch_capable:
+    if user_agent.is_mobile or user_agent.is_bot or user_agent.is_touch_capable or user_agent.is_pc:
         try:
             telegram_id = decoder(telegram_id)
             user = User.objects.get(telegram_id=telegram_id)
@@ -47,7 +58,7 @@ def index(request, telegram_id):
 def update_coins(request, telegram_id):
     user_agent = get_user_agent(request)
 
-    if user_agent.is_mobile or user_agent.is_bot or user_agent.is_touch_capable:
+    if user_agent.is_mobile or user_agent.is_bot or user_agent.is_touch_capable or user_agent.is_pc:
         if request.method == "POST":
             # Get user from DataBase with user's telegram id
             try:
@@ -76,7 +87,7 @@ def update_coins(request, telegram_id):
 def boost(request, telegram_id):
     user_agent = get_user_agent(request)
 
-    if user_agent.is_mobile or user_agent.is_bot or user_agent.is_touch_capable:
+    if user_agent.is_mobile or user_agent.is_bot or user_agent.is_touch_capable or user_agent.is_pc:
         try:
             telegram_id = decoder(telegram_id)
             userData = User.objects.get(telegram_id=telegram_id)
@@ -122,7 +133,7 @@ def boost(request, telegram_id):
 def guid(request, telegram_id):
     user_agent = get_user_agent(request)
 
-    if user_agent.is_mobile or user_agent.is_bot or user_agent.is_touch_capable:
+    if user_agent.is_mobile or user_agent.is_bot or user_agent.is_touch_capable or user_agent.is_pc:
         telegram_id = decoder(telegram_id)
 
         userData = User.objects.get(telegram_id=telegram_id)
@@ -136,7 +147,7 @@ def guid(request, telegram_id):
 def friends(request, telegram_id):
     user_agent = get_user_agent(request)
 
-    if user_agent.is_mobile or user_agent.is_bot or user_agent.is_touch_capable:
+    if user_agent.is_mobile or user_agent.is_bot or user_agent.is_touch_capable or user_agent.is_pc:
         telegram_id = decoder(telegram_id)
         ref_friends = RefFriendModel.objects.filter(telegram_id=telegram_id)
         user_refs = []

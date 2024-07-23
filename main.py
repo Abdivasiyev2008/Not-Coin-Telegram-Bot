@@ -23,7 +23,7 @@ logging.basicConfig(format="%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger(__name__)
 
 CHANNEL_ID = '@testchannelbots2dw'  # Enter your telegram channel
-BOT_TOKEN = '7384714328:AAHvieSEyVWe_JwUsg8wvXxwWQSiZBzHBkY'  # Enter your bot token
+BOT_TOKEN = '6776518195:AAH2zQwIRxWWnUV2xMt77aFT3STyyegMPhU'  # Enter your bot token
 
 
 # Create user on Web Site
@@ -142,7 +142,7 @@ A huge reward awaits you at the end of the project for inviting your friends. It
         reply_markup=ReplyKeyboardMarkup(
             keyboard=[
                 [KeyboardButton(text="PLAY!",
-                                web_app=WebAppInfo(url=f"https://7cc5-84-54-70-208.ngrok-free.app/{user_id}/"))],
+                                web_app=WebAppInfo(url=f"https://1ff9-84-54-70-208.ngrok-free.app/{user_id}/"))],
             ],
             resize_keyboard=True
         ),

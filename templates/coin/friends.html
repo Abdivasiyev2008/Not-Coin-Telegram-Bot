@@ -4,7 +4,7 @@
     {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RPG - Frens</title>
+    <title>RPG - Friends</title>
 
     <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/responsive.css' %}">
@@ -12,8 +12,15 @@
 
     <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon/favicon.ico' %}">
 </head>
-<body class="frens">
 
+<style>
+    .frens-invite-button, .frens {
+         background: radial-gradient(circle, rgba(205,122,243,1) 0%, rgba(154,31,191,1) 15%, rgba(23,23,23,1) 75%);
+
+    }
+</style>
+
+<body class="frens">
     <div class="haeder">
         <a href="/{{ telegram_id }}/">
             <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -26,18 +33,18 @@
     <div class="frens-main">
 
         <div class="frens-count">
-            <span>{{ user.count }} Frens</span>
+            <span>Users</span>
         </div>
 
         <div class="frens-total-earn">
             <div class="frens-total-count">
-                <span>+72.5k</span>
+                <span>+10M</span>
                 <img src="{% static 'assets/images/coin.png' %}" width="20px">
             </div>
 
             <div>
-                <span>Top 300</span>
-                <span class="leaders">leaders</span>
+                <span>237,826</span>
+                <span class="leaders">users</span>
             </div>
 
             <div>
@@ -51,7 +58,7 @@
 
     <div class="frens-help">
         <div class="frens-help-title">
-            <span>Invite frens to get bonuses</span>
+            <span>Invite friends to get bonuses</span>
         </div>
 
         <div class="frens-help-box">
@@ -60,11 +67,11 @@
                     <img src="{% static 'assets/images/golden.png' %}" width="50px">
                 </div>
                 <div class="fren-help-text">
-                    <h5>Invite fren</h5>
+                    <h5>Invite friend</h5>
                     <div>
                         <img src="{% static 'assets/images/coin.png' %}" width="15px">
-                        <span>1k</span>
-                        <span>for you and fren</span>
+                        <span>+1k</span>
+                        <span>for you and friend</span>
                     </div>
                 </div>
             </div>
@@ -77,7 +84,7 @@
 
     <div class="frens-list">
         <div class="frens-list-title">
-            <span>Frens List</span>
+            <span>Friends List {{ user_refs | length }} </span>
         </div>
 
         <!-- Friends List -->
@@ -88,7 +95,7 @@
                             <img style="width: 80px; height: 50px; border-radius: 50%; padding-right: 3px"
                                     src="https://static.vecteezy.com/system/resources/previews/019/879/186/original/user-icon-on-transparent-background-free-png.png" alt="">
                         <div class="frens-profile-data">
-                            <h4>{{ user.ref_friend }}</h4>
+                            <h4>{{ user.name }}</h4>
                             <div>
                                 <img src="{% static 'assets/images/3d-trophy.png' %}" width="15px">
                                 <span>Gold</span>
@@ -114,7 +121,7 @@
 
     <div class="frens-invite">
         <div class="frens-invite-button">
-            <a style="color: #ffffff" href="#" onclick="copyToClipboard('https://t.me/RPGCOINBOT?start=r_{{ copy }}')">Invite a fren</a>
+            <a style="color: #ffffff; " href="#" onclick="copyToClipboard('https://t.me/RPGCOINBOT?start=r_{{ copy }}')">Invite a friend</a>
         </div>
     </div>
 
@@ -129,7 +136,6 @@
             textarea.select();
             document.execCommand('copy');
             document.body.removeChild(textarea);
-            alert('Referal Link copied to clipboard');
         }
     </script>
 

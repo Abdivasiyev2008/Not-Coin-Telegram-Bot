@@ -158,8 +158,10 @@ def friends(request, telegram_id):
                 user_ref = User.objects.get(telegram_id=ref_friend.ref_friend)
                 user_refs.append({
                     'ref_friend': ref_friend.ref_friend,
-                    'coins': user_ref.coins
+                    'coins': user_ref.coins,
+                    'name': user_ref.name,
                 })
+
             except User.DoesNotExist:
                 # Unless find `User` in database, continue
                 continue
@@ -169,7 +171,7 @@ def friends(request, telegram_id):
         context = {
             'telegram_id': telegram_id,
             'user_refs': user_refs,
-            'copy': copy
+            'copy': copy,
         }
 
         return render(request, 'coin/friends.html', context)

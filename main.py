@@ -27,10 +27,11 @@ BOT_TOKEN = '6776518195:AAH2zQwIRxWWnUV2xMt77aFT3STyyegMPhU'  # Enter your bot t
 
 
 # Create user on Web Site
-async def add_user(telegram_id, coins, limit=1000, energy=1000, tap=1):
+async def add_user(telegram_id, name, coins, limit=1000, energy=1000, tap=1):
     loop = asyncio.get_event_loop()
     user, created = await loop.run_in_executor(None, lambda: User.objects.get_or_create(
         telegram_id=telegram_id,
+        name=name,
         defaults={'coins': coins, 'limit': limit, 'energy': energy, 'tap': tap}
     ))
     return created
@@ -68,6 +69,10 @@ async def check_subscription(user_id):
 # Start function
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user_id = update.effective_user.id
+    if update.effective_user.last_name != None:
+        name = str(update.effective_user.first_name) + " " + update.effective_user.last_name
+    else:
+        name = str(update.effective_user.first_name)
     args = context.args
 
     # Check if referral code is provided
@@ -114,7 +119,7 @@ A huge reward awaits you at the end of the project for inviting your friends. It
         # If there is not on database and nobody didn't inv his or her, create her or his on Database with 5000 coins  for gift
 
         if not user_exists:
-            created = await add_user(user_id, coins=5000)
+            created = await add_user(user_id, name=name, coins=5000)
             await inv_friend(referred_user_id, user_id)
 
             if created:
@@ -132,7 +137,7 @@ A huge reward awaits you at the end of the project for inviting your friends. It
         # If user enter bot with /start, bot doesn't give coin for gift
         user_exists = await loop.run_in_executor(None, lambda: User.objects.filter(telegram_id=user_id).exists())
         if not user_exists:
-            await add_user(user_id, coins=0)
+            await add_user(user_id, name=name, coins=0)
 
     user_id = encoder(user_id)
 
@@ -142,7 +147,7 @@ A huge reward awaits you at the end of the project for inviting your friends. It
         reply_markup=ReplyKeyboardMarkup(
             keyboard=[
                 [KeyboardButton(text="PLAY!",
-                                web_app=WebAppInfo(url=f"https://1ff9-84-54-70-208.ngrok-free.app/{user_id}/"))],
+                                web_app=WebAppInfo(url=f"https://da82-84-54-70-208.ngrok-free.app/{user_id}/"))],
             ],
             resize_keyboard=True
         ),

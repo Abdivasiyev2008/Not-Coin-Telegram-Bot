@@ -17,6 +17,14 @@
             color: #ffffff;
             pointer-events: none; /* Prevents animation from intercepting clicks */
         }
+        body {
+                 background: radial-gradient(circle, rgba(205,122,243,1) 0%, rgba(154,31,191,1) 15%, rgba(23,23,23,1) 75%);
+
+        }
+        .progress {
+            background: linear-gradient(278deg, rgba(205,122,243,1) 2%, rgba(154,31,191,1) 52%, rgba(75,1,97,1) 88%);
+
+        }
     </style>
 </head>
 <body>
@@ -28,7 +36,7 @@
                 <img style="width: 3rem; height: 3rem; border-radius: 50%" src="{% static 'images/user.webp' %}">
 
                 <div class="user-data">
-                    <span class="name">{{ user }}</span>
+                    <span class="name">{{ user.name }}</span>
                     <span class="user-rank">Bronza</span>
                 </div>
             </div>

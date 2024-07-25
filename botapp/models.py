@@ -11,6 +11,7 @@ class UserManager(models.Manager):
 
 class User(models.Model):
     telegram_id = models.CharField(max_length=255, unique=True)
+    name = models.CharField(max_length=255)
     coins = models.IntegerField(default=0)
     last_interaction = models.DateTimeField(auto_now=True)
     limit = models.IntegerField(default=1000)
